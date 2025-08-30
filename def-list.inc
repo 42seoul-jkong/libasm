@@ -10,7 +10,7 @@
 ;                                                                              ;
 ; **************************************************************************** ;
 
-struc list
+struc t_list
     .data: resq 1 ; void*
-    .next: resq 1 ; struc list*
+    .next: resq 1 ; struc t_list*
 endstruc
