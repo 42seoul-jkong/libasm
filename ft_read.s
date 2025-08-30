@@ -18,6 +18,8 @@ section .text
 global ft_read
 ft_read:
     ; 프롤로그
+    push rbp
+    mov rbp, rsp
     ; RDI: 첫 번째 인자
     ; RSI: 두 번째 인자
     ; RDX: 세 번째 인자
@@ -29,6 +31,7 @@ ft_read:
 
 .return:
     ; 에필로그
+    pop rbp
     ret
 
 .error:

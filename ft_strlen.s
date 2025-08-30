@@ -16,8 +16,9 @@ section .text
 global ft_strlen
 ft_strlen:
     ; 프롤로그
+    push rbp
+    mov rbp, rsp
     ; RDI: 첫 번째 인자
-    push rdi
 
     ; cld
     ;  CLear Direction flag (DF = 0)
@@ -40,7 +41,7 @@ ft_strlen:
     lea rax, [rcx - 1]
 
     ; 에필로그
-    pop rdi
+    pop rbp
     ret
 
 %include "_note.inc"

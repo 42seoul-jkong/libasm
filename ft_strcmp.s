@@ -16,10 +16,10 @@ section .text
 global ft_strcmp
 ft_strcmp:
     ; 프롤로그
+    push rbp
+    mov rbp, rsp
     ; RDI: 첫 번째 인자
     ; RSI: 두 번째 인자
-    push rdi
-    push rsi
 
     ; cld
     ;  CLear Direction flag (DF = 0)
@@ -49,8 +49,7 @@ ft_strcmp:
 
 .return:
     ; 에필로그
-    pop rsi
-    pop rdi
+    pop rbp
     ret
 
 %include "_note.inc"

@@ -16,10 +16,10 @@ section .text
 global ft_strcpy
 ft_strcpy:
     ; 프롤로그
+    push rbp
+    mov rbp, rsp
     ; RDI: 첫 번째 인자
     ; RSI: 두 번째 인자
-    push rdi
-    push rsi
 
     ; 아래 String 명령에서 RAX와 RDI를 destructive하게 사용하므로 RDX에 보존
     mov rdx, rdi
@@ -46,8 +46,7 @@ ft_strcpy:
     mov rax, rdx
 
     ; 에필로그
-    pop rsi
-    pop rdi
+    pop rbp
     ret
 
 %include "_note.inc"

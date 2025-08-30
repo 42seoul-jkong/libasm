@@ -18,9 +18,9 @@ section .text
 global ft_strdup
 ft_strdup:
     ; 프롤로그
+    push rbp
+    mov rbp, rsp
     ; RDI: 첫 번째 인자
-    push rdi
-    push rbx
 
     ; cld
     ;  CLear Direction flag (DF = 0)
@@ -63,8 +63,7 @@ ft_strdup:
 
 .return:
     ; 에필로그
-    pop rbx
-    pop rdi
+    pop rbp
     ret
 
 .error_nomem:
