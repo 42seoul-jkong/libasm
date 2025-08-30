@@ -40,7 +40,7 @@ ft_strdup:
     ; malloc(R13)
     mov rdi, r13
     ; call의 push-ret-addr, 프롤로그의 push rbp, push r12, push r13으로 인한 스택 16바이트 align 상태
-    call malloc
+    call malloc wrt ..plt
     test rax, rax
     jz .error_nomem
 
