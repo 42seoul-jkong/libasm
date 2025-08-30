@@ -31,7 +31,7 @@ ft_read:
 
 .return:
     ; 에필로그
-    pop rbp
+    leave
     ret
 
 .error:

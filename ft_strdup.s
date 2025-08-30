@@ -69,7 +69,7 @@ ft_strdup:
     pop r13
     pop r12
     ; 에필로그
-    pop rbp
+    leave
     ret
 
 .error_nomem:

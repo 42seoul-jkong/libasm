@@ -49,7 +49,7 @@ ft_strcmp:
 
 .return:
     ; 에필로그
-    pop rbp
+    leave
     ret
 
 %include "_note.inc"

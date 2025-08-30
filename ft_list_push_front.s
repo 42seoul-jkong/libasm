@@ -44,7 +44,7 @@ ft_list_push_front:
     pop r13
     pop r12
     ; 에필로그
-    pop rbp
+    leave
     ret
 
 .error_nomem:
