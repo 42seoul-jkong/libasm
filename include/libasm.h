@@ -22,7 +22,7 @@ ssize_t ft_write(int fd, const void* buf, size_t count);
 ssize_t ft_read(int fd, void* buf, size_t count);
 char* ft_strdup(const char* s);
 
-int	ft_atoi_base(char *str, char *base);
+int	ft_atoi_base(const char* nptr, const char* base);
 
 typedef struct s_list
 {
@@ -33,7 +33,7 @@ typedef struct s_list
 typedef int (*t_list_cmp_data)(const void* data1, const void* data2);
 typedef int (*t_list_free_data)(void* data);
 
-void ft_list_push_front(t_list** begin_list_ptr, void* data);
+t_list* ft_list_push_front(t_list** begin_list_ptr, void* data);
 size_t ft_list_size(const t_list* begin_list);
 void ft_list_sort(t_list** begin_list_ptr, t_list_cmp_data cmp);
-void ft_list_remove_if(t_list** begin_list_ptr, void* data_ref, t_list_cmp_data cmp, t_list_free_data free_data);
+size_t ft_list_remove_if(t_list** begin_list_ptr, void* data_ref, t_list_cmp_data cmp, t_list_free_data free_data);
