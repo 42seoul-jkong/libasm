@@ -21,21 +21,25 @@ ft_strdup:
     push rbp
     mov rbp, rsp
     ; RDI: 첫 번째 인자
+    push r12
+    push r13
 
     ; cld
     ;  CLear Direction flag (DF = 0)
     cld
 
-    ; RBX = RDI
-    mov rbx, rdi
-    ; RCX = strlen(RDI) + 1
+    ; R12 = s
+    mov r12, rdi
+    ; R13 = strlen(s) + 1
     mov rcx, -1
     xor rax, rax
     repne scasb
     not rcx
+    mov r13, rcx
 
-    ; malloc(RCX)
-    mov rdi, rcx
+    ; malloc(R13)
+    mov rdi, r13
+    ; call의 push-ret-addr, 프롤로그의 push rbp, push r12, push r13으로 인한 스택 16바이트 align 상태
     call malloc
     test rax, rax
     jz .error_nomem
@@ -44,12 +48,12 @@ ft_strdup:
     ;  CLear Direction flag (DF = 0)
     cld
 
-    ; CX = strlen + 1, SI = 첫 번째 인자, DI = malloc의 반환값
-    mov rcx, rdi
-    mov rsi, rbx
+    ; CX = R13, SI = R12, DI = malloc의 반환값
+    mov rcx, r13
+    mov rsi, r12
     mov rdi, rax
-    ; RBX = RAX: malloc의 반환값
-    mov rbx, rax
+    ; RDX = RAX: malloc의 반환값
+    mov rdx, rax
     ; movsb
     ;  MOVe String Byte
     ;  mov [RDI++], [RSI++]
@@ -58,10 +62,12 @@ ft_strdup:
     ;  CX: repeat Count
     ;  while (CX-- == 0)
     rep movsb
-    ; RAX: 반환값 = RBX: malloc의 반환값
-    mov rax, rbx
+    ; RAX: 반환값 = RDX: malloc의 반환값
+    mov rax, rdx
 
 .return:
+    pop r13
+    pop r12
     ; 에필로그
     pop rbp
     ret
