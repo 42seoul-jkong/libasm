@@ -29,6 +29,8 @@ SOURCES += ft_strlen.s \
 
 OBJECTS = $(addprefix $(OBJECTS_DIR), $(SOURCES:.s=.o))
 
+ASFLAGS += -MD $(@:.o=.d)
+
 AS_WARNING_FLAGS = werror=all
 ASFLAGS += $(addprefix -, $(AS_WARNING_FLAGS))
 
@@ -54,6 +56,6 @@ $(OBJECTS_DIR)%.o: %.s | $(OBJECTS_DIR)
 	$(COMPILE.s) $< -o $@
 
 $(TARGET): $(OBJECTS)
-	$(AR) $(ARFLAGS) $@ $^
+	$(AR) $(ARFLAGS) $@ $?
 
 -include $(OBJECTS:.o=.d)

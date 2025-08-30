@@ -52,3 +52,5 @@ ft_strcmp:
     pop rsi
     pop rdi
     ret
+
+%include "_note.inc"

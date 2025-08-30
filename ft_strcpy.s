@@ -49,3 +49,5 @@ ft_strcpy:
     pop rsi
     pop rdi
     ret
+
+%include "_note.inc"

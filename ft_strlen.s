@@ -42,3 +42,5 @@ ft_strlen:
     ; 에필로그
     pop rdi
     ret
+
+%include "_note.inc"

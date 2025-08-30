@@ -70,3 +70,5 @@ ft_strdup:
 .error_nomem:
     ; malloc에 의하여, RAX == 0, errno == ENOMEM
     jmp .return
+
+%include "_note.inc"

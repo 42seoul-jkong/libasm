@@ -10,7 +10,7 @@
 ;                                                                              ;
 ; **************************************************************************** ;
 
-extern __errno_location
+%include "_syscall.inc"
 
 section .text
 
@@ -22,8 +22,7 @@ ft_read:
     ; RSI: 두 번째 인자
     ; RDX: 세 번째 인자
 
-    ; SYS_READ = 0
-    mov rax, 0
+    mov rax, SYS_READ
     syscall
     test rax, rax
     js .error
@@ -36,7 +35,9 @@ ft_read:
     ; errno
     mov rcx, rax
     neg rcx
-    call __errno_location
+    call ERRNO_LOCATION
     mov [rax], rcx
     mov rax, -1
     jmp .return
+
+%include "_note.inc"
