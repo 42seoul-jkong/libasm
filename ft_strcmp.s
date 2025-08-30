@@ -44,7 +44,8 @@ ft_strcmp:
 .not_equals:
     ; RAX: 반환값 = DL - CL
     movzx rax, dl
-    sub rax, cl
+    movzx rcx, cl
+    sub rax, rcx
 
 .return:
     ; 에필로그
