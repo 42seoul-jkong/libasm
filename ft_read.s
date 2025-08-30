@@ -38,6 +38,7 @@ ft_read:
     ; errno
     mov rcx, rax
     neg rcx
+    ; call의 push-ret-addr, 프롤로그의 push rbp로 인한 스택 16바이트 align 상태
     call ERRNO_LOCATION
     mov [rax], rcx
     mov rax, -1
