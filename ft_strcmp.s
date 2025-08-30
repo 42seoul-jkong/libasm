@@ -33,7 +33,7 @@ ft_strcmp:
     ;  if (DF == 0) cmp [RSI++], [RDI++]
     ;  else cmp [RSI--], [RDI--]
     cmpsb
-    jne .not_equals
+    jne .not_equal
     test cl, cl
     jnz .loop
 
@@ -41,7 +41,7 @@ ft_strcmp:
     xor rax, rax
     jmp .return
 
-.not_equals:
+.not_equal:
     ; RAX: 반환값 = DL - CL
     movzx rax, dl
     movzx rcx, cl

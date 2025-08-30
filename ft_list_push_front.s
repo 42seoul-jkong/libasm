@@ -12,6 +12,8 @@
 
 %include "def-list.inc"
 
+extern malloc
+
 section .text
 
 ; t_list* ft_list_push_front(t_list** begin_list_ptr, void* data);
@@ -20,13 +22,19 @@ ft_list_push_front:
     ; 프롤로그
     push rbp
     mov rbp, rsp
+
+    ; begin_list_ptr == nullptr
+    xor rax, rax
+    test rdi, rdi
+    jz .early_return
+
     ; RDI: 첫 번째 인자
     ; RSI: 두 번째 인자
     push r12
     push r13
 
-    push r12, rdi
-    push r13, rsi
+    mov r12, rdi
+    mov r13, rsi
 
     ; create_elem
     mov rdi, t_list_size
@@ -43,6 +51,7 @@ ft_list_push_front:
 .return:
     pop r13
     pop r12
+.early_return:
     ; 에필로그
     leave
     ret
