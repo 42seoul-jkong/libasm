@@ -11,24 +11,46 @@
 const char *sample_vector[] = {"",
                                "0",
                                "0123456789",
-                               "0123456789abcd-",
-                               "0123456789abcdef",
-                               "0123456789abcdef+",
-                               "0123456789abcdef0123456789ABCD-",
-                               "0123456789abcdef0123456789ABCDEF",
-                               "0123456789abcdef0123456789ABCDEF+",
-                               "0123456789abcdef0\000123456789ABCDEF",
-                               "0123456789abcdef01\00023456789ABCDEF",
-                               "0123456789abcdef012\0003456789ABCDEF",
+                               "0123456789ABCD-",
+                               "0123456789ABCDEF",
+                               "0123456789ABCDEF+",
+                               "0123456789ABCDEF0123456789ABCD-",
+                               "0123456789ABCDEF0123456789ABCDEF",
+                               "0123456789ABCDEF0123456789ABCDEF+",
+                               "0123456789ABCDEF0\000123456789ABCDEF",
+                               "0123456789ABCDEF01\00023456789ABCDEF",
+                               "0123456789ABCDEF012\0003456789ABCDEF",
+                               "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+                               "ZZZZZZZZZ",
+                               "XXXXXXXXX",
+                               "YYYYYYYYY",
+                               "MMMMMMMMM",
+                               "NNNNNNNNN",
+                               "WWWWWWWWW",
+                               "CCCCCCCCC",
+                               "VVVVVVVVV",
+                               "BBBBBBBBB",
+                               "AAAAAAAAA",
+                               "FFFFFFFFF",
+                               "999999999",
+                               "000000000",
                                "한글",
                                "각",
                                "가",
                                "갂",
-                               "ab",
-                               "a",
-                               "abc",
-                               "abd",
-                               "abb",
+                               "AB",
+                               "A",
+                               "ABC",
+                               "ABD",
+                               "ABB",
+                               "2147483647",
+                               "2147483648",
+                               "-2147483648",
+                               "-2147483649",
+                               "+0",
+                               "-0",
+                               "      -42",
+                               "       42",
                                NULL};
 
 void panic(const char *error) {
@@ -179,6 +201,122 @@ bool test_strdup(void) {
   return success;
 }
 
+bool compare_atoi_base(const char *s) {
+  if (ft_atoi_base(s, "0123456789") != (int)strtol(s, NULL, 10) &&
+      errno != ERANGE) {
+    printf("atoi_base 10의 각 결과를 비교한 결과가 다름: \"%s\"\n", s);
+    return false;
+  }
+  if (ft_atoi_base(s, "0123456789ABCDEF") != (int)strtol(s, NULL, 16) &&
+      errno != ERANGE) {
+    printf("atoi_base 16의 각 결과를 비교한 결과가 다름: \"%s\"\n", s);
+    return false;
+  }
+  if (ft_atoi_base(s, "01234567") != (int)strtol(s, NULL, 8) &&
+      errno != ERANGE) {
+    printf("atoi_base 8의 각 결과를 비교한 결과가 다름: \"%s\"\n", s);
+    return false;
+  }
+  if (ft_atoi_base(s, "01") != (int)strtol(s, NULL, 2) && errno != ERANGE) {
+    printf("atoi_base 2의 각 결과를 비교한 결과가 다름: \"%s\"\n", s);
+    return false;
+  }
+  if (ft_atoi_base(s, "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ") !=
+          (int)strtol(s, NULL, 36) &&
+      errno != ERANGE) {
+    printf("atoi_base 36의 각 결과를 비교한 결과가 다름: \"%s\"\n", s);
+    return false;
+  }
+  if (ft_atoi_base(s, "012345678") != (int)strtol(s, NULL, 9) &&
+      errno != ERANGE) {
+    printf("atoi_base 9의 각 결과를 비교한 결과가 다름: \"%s\"\n", s);
+    return false;
+  }
+  if (ft_atoi_base(s, "0123456789A") != (int)strtol(s, NULL, 11) &&
+      errno != ERANGE) {
+    printf("atoi_base 11의 각 결과를 비교한 결과가 다름: \"%s\"\n", s);
+    return false;
+  }
+  return true;
+}
+
+bool test_atoi_base(void) {
+  bool success = true;
+  for (const char **sample = sample_vector; *sample; sample++) {
+    success &= compare_atoi_base(*sample);
+  }
+  if (ft_atoi_base("42", "") != 0) {
+    printf("0진수 오류 발생하지 않음\n");
+    return false;
+  }
+  if (ft_atoi_base("42", "0") != 0) {
+    printf("1진수 오류 발생하지 않음\n");
+    return false;
+  }
+  if (ft_atoi_base("42", "01234567890") != 0) {
+    printf("중복 base 문자 오류 발생하지 않음\n");
+    return false;
+  }
+  if (ft_atoi_base("42", "+123456789") != 0) {
+    printf("유효하지 않은 base 문자 오류 발생하지 않음\n");
+    return false;
+  }
+  return success;
+}
+
+int uncond_return_equals(const void *data1, const void *data2) {
+  (void)data1, (void)data2;
+  return 0;
+}
+
+void free_print(void *data) { printf("free elem %p\n", data); }
+
+bool test_list(void) {
+  t_list *list = NULL;
+  ft_list_sort(&list, NULL);
+  if (ft_list_remove_if(&list, NULL, &uncond_return_equals, &free_print) != 0) {
+    printf("리스트에서 삭제된 노드의 개수가 예상과 다름 (0)\n");
+    return false;
+  }
+  if (ft_list_size(list) != 0) {
+    printf("리스트 길이가 예상과 다름 (0)\n");
+    return false;
+  }
+  for (size_t i = 0; i < 42; i++) {
+    ft_list_push_front(&list, (void *)i);
+  }
+  if (ft_list_size(list) != 42) {
+    printf("리스트 길이가 예상과 다름 (42)\n");
+    return false;
+  }
+  if (ft_list_remove_if(&list, (void *)21, NULL, &free_print) != 1) {
+    printf("리스트에서 삭제된 노드의 개수가 예상과 다름 (1)\n");
+    return false;
+  }
+  if (ft_list_size(list) != 41) {
+    printf("리스트 길이가 예상과 다름 (41)\n");
+    return false;
+  }
+  ft_list_sort(&list, NULL);
+  if (ft_list_remove_if(&list, (void *)41, NULL, &free_print) != 1) {
+    printf("리스트에서 삭제된 노드의 개수가 예상과 다름 (1)\n");
+    return false;
+  }
+  if (ft_list_size(list) != 40) {
+    printf("리스트 길이가 예상과 다름 (40)\n");
+    return false;
+  }
+  if (ft_list_remove_if(&list, NULL, &uncond_return_equals, NULL) != 40) {
+    printf("리스트에서 삭제된 노드의 개수가 예상과 다름 (40)\n");
+    return false;
+  }
+  if (list != NULL) {
+    printf("리스트의 상태가 예상과 다름 (NULL)\n");
+    return false;
+  }
+  return true;
+}
+
 int main(int argc, char *argv[]) {
   (void)argc, (void)argv;
 
@@ -190,6 +328,9 @@ int main(int argc, char *argv[]) {
   success &= test_write();
   success &= test_read();
   success &= test_strdup();
+
+  success &= test_atoi_base();
+  success &= test_list();
 
   return success ? EXIT_SUCCESS : EXIT_FAILURE;
 }

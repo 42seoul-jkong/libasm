@@ -47,7 +47,7 @@ ft_list_sort:
 
     ; RAX == 0 상태
     mov [rbp - _locals_size + _locals.sorted_list], rax ; local (t_list*) sorted_list = nullptr
-    ; rbx:  [[temporary]] (t_list*) sorted_prev_next
+    ; rbx:  [[temporary]] (t_list** | t_list*) sorted_prev_next
     mov r12, rdi ; begin_list_ptr
     mov r13, rsi ; cmp
     mov r14, [rdi] ; local (t_list*) unsorted_curr = *begin_list_ptr
@@ -70,8 +70,10 @@ ft_list_sort:
     ; cmp(R15->data, R14->data) < 0
     mov rdi, [r15 + t_list.data]
     mov rsi, [r14 + t_list.data]
+    mov rbx, rax
     call r13
     test rax, rax
+    mov rax, rbx
     jns .loop.branch_end
 
 ; .loop.branch_if:
