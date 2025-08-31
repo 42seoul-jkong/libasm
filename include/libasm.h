@@ -31,7 +31,7 @@ typedef struct s_list
 } t_list;
 
 typedef int (*t_list_cmp_data)(const void* data1, const void* data2);
-typedef int (*t_list_free_data)(void* data);
+typedef void (*t_list_free_data)(void* data);
 
 t_list* ft_list_push_front(t_list** begin_list_ptr, void* data);
 size_t ft_list_size(const t_list* begin_list);
