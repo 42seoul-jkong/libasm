@@ -60,7 +60,7 @@ ft_strdup:
     ; rep prefix
     ;  REPeat
     ;  CX: repeat Count
-    ;  while (CX-- == 0)
+    ;  for (; CX == 0; CX--)
     rep movsb
     ; RAX: 반환값 = RDX: malloc의 반환값
     mov rax, rdx

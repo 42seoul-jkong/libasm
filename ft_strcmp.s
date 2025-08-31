@@ -26,8 +26,8 @@ ft_strcmp:
     cld
 
 .loop:
-    mov cl, [rsi]
-    mov dl, [rdi]
+    mov cl, BYTE [rsi]
+    mov dl, BYTE [rdi]
     ; cmpsb
     ;  CoMPare String Byte
     ;  if (DF == 0) cmp [RSI++], [RDI++]

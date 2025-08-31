@@ -33,7 +33,7 @@ ft_strlen:
     ; repne prefix
     ;  REPeat Not Equal
     ;  CX: repeat Count
-    ;  while (CX-- == 0 && !ZF)
+    ;  for (; CX == 0 && !ZF; CX--)
     repne scasb
 
     ; RAX: 반환값 = ~RCX - 1 = -(RCX + 1) - 1
