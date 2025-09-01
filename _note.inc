@@ -10,4 +10,4 @@
 ;                                                                              ;
 ; **************************************************************************** ;
 
-section .note.GNU-stack progbits noalloc noexec nowrite align=16
+section .note.GNU-stack note noalloc noexec nowrite align=4
